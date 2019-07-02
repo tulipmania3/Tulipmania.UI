@@ -7,11 +7,13 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularMaterialModule } from './angular-material.module';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
