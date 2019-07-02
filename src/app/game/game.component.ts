@@ -352,42 +352,38 @@ export class GameComponent implements AfterViewInit {
 
     
     @HostListener('document:mousedown', ['$event']) onMouseDownHandler(event: MouseEvent) {
-        if(event.button == 0){
-            let x = event.x - this.width / 2;
-            let y = this.height / 2 - event.y;
-    
-            if(x == 0){
-                x += .00001;
-            }
-    
-            let feta = Math.atan(Math.abs(y/x));
-            if(x < 0){
-                feta = Math.PI - feta;
-            } 
-    
-            if(y < 0){
-                feta *= -1;
-            }
-    
-            if(feta < Math.PI / 3 && feta > -1 * Math.PI / 3){
-                this.player.direction = Direction.Right;
-            } else if(feta < 2 * Math.PI / 3 && feta > Math.PI / 3){
-                this.player.direction = Direction.Up;
-            }else if(feta > 2 * Math.PI / 3 || feta < -2 * Math.PI / 3){
-                this.player.direction = Direction.Left;            
-            }else if(feta > -2 * Math.PI / 3 && feta < -1 * Math.PI / 3){
-                this.player.direction = Direction.Down;            
-            }
-    
-            this.player.velocity = 8;
+        let x = event.x - this.width / 2;
+        let y = this.height / 2 - event.y;
+
+        if(x == 0){
+            x += .00001;
         }
+
+        let feta = Math.atan(Math.abs(y/x));
+        if(x < 0){
+            feta = Math.PI - feta;
+        } 
+
+        if(y < 0){
+            feta *= -1;
+        }
+
+        if(feta < Math.PI / 3 && feta > -1 * Math.PI / 3){
+            this.player.direction = Direction.Right;
+        } else if(feta < 2 * Math.PI / 3 && feta > Math.PI / 3){
+            this.player.direction = Direction.Up;
+        }else if(feta > 2 * Math.PI / 3 || feta < -2 * Math.PI / 3){
+            this.player.direction = Direction.Left;            
+        }else if(feta > -2 * Math.PI / 3 && feta < -1 * Math.PI / 3){
+            this.player.direction = Direction.Down;            
+        }
+
+        this.player.velocity = 8;
     }
 
     
     @HostListener('document:mouseup', ['$event']) onMouseUpHandler(event: MouseEvent) {
-        if(event.button == 0){
-            this.player.velocity = 0;
-        }
+        this.player.velocity = 0;
     }
 
     @HostListener('document:keyup', ['$event']) onKeyupHandler(event: KeyboardEvent) {
