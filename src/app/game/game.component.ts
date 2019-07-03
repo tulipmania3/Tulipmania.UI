@@ -129,6 +129,15 @@ export class GameComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
+        for(let y = 2; y < this.tilemap.length - 2; y++){
+            for(let x = 2; x < this.tilemap[y].length - 2; x++){
+                if(Math.ceil(Math.random() * 1000) % 30 == 0){
+                    this.tilemap[y][x] = 6;
+                } else {
+                    this.tilemap[y][x] = Math.ceil(Math.random() * 100) % 3 + 3;
+                }
+            }
+        }
         let canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
         canvasEl.height = canvasEl.offsetHeight;
         canvasEl.width = canvasEl.offsetWidth;
@@ -167,7 +176,7 @@ export class GameComponent implements AfterViewInit {
             this.reset();
             this.update();
             this.draw();
-        }, 20);
+        }, 33);
     }
 
     reset() {
@@ -223,7 +232,7 @@ export class GameComponent implements AfterViewInit {
             for (let y = sy; y < sy + th && y < this.tilemap.length && this.player.velocity; y++) {
                 for (let x = sx; x < sx + tw && x < this.tilemap[y].length && this.player.velocity; x++) {
                     let tile = this.tilemap[y][x];
-                    if(tile != 0 && tile != 3){
+                    if(tile < 3){
                         let xl = Math.max(this.player.position.x, x * 32);
                         let xr = Math.min(this.player.position.x + this.player.width, (x + 1) * 32);
                         let yt = Math.max(this.player.position.y, y * 32);
@@ -281,11 +290,17 @@ export class GameComponent implements AfterViewInit {
                 let tile = this.tilemap[y][x];
                 this.context.drawImage(this.tileSheet, 16, 129, 16, 16, x * 32, y * 32, 34, 34);
 
-                if (tile == 0) {
+                if (tile == 4) {
                     this.context.drawImage(this.tileSheet, 16, 129, 16, 15, x * 32, y * 32, 34, 34);
                 } else if (tile == 3){
                     this.context.drawImage(this.tileSheet, 0, 129, 16, 15, x * 32, y * 32, 34, 34);
-                } else if (tile == 1) {
+                } else if (tile == 6) {
+                    this.context.drawImage(this.tileSheet, 16, 129, 16, 15, x * 32, y * 32, 34, 34);
+                    this.context.drawImage(this.tileSheet, 33, 113, 16, 15, x * 32, y * 32, 34, 34);  
+                } else if (tile == 5) {   
+                    this.context.drawImage(this.tileSheet, 0, 129, 16, 15, x * 32, y * 32, 34, 34);
+                    this.context.drawImage(this.tileSheet, 65, 33, 16, 15, x * 32, y * 32, 34, 34);                     
+                }else if (tile == 1) {
                     this.context.drawImage(this.tileSheet, 16, 129, 16, 16, x * 32, y * 32, 34, 34);
                     this.context.drawImage(this.tileSheet, 96, 48, 16, 16, x * 32, y * 32, 34, 34);
                 } else if (tile == 2) {
@@ -326,7 +341,7 @@ export class GameComponent implements AfterViewInit {
                 directionFrame = 2;
         }
 
-        this.context.drawImage(this.player.image, 16 * spriteFrame, 16 * directionFrame, 16, 16, this.player.position.x, this.player.position.y, this.player.width, this.player.height);
+        this.context.drawImage(this.player.image, 16 * spriteFrame, 16 * directionFrame, 16, 16, this.player.position.x, this.player.position.y, this.player.width + 10, this.player.height + 10);
     }
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
